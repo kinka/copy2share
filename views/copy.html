@@ -1,0 +1,14 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name=viewport content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no,viewport-fit=cover">
+</head>
+<body>
+<h1>copy board</h1>
+<a href="/goweb/share?tag={{.Tag}}" style="margin-bottom: 9px; display: block;">share board</a>
+<form action="/goweb/copy?tag={{.Tag}}&go=share" method="POST">
+    <textarea style="width: 100%; height: 150px;" name="content" placeholder="whatever"></textarea>
+    <input style="padding: 5px 9px; background: transparent; border: 1px solid; margin-top: 12px;" type="submit" value="doIT!"/>
+</form>
+</body>
+</html>
