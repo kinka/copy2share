@@ -1,0 +1,65 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name=viewport content="width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no,viewport-fit=cover">
+    <style>
+    .item {
+        margin: 9px 0;
+        word-break: break-all;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        border-radius: 6px;
+        padding: 18px 9px;
+    }
+    a {
+        color: black;
+        text-decoration: none;
+    }
+    .copy-board {
+        font-size: 16px;
+        color: #1BC1A1;
+        padding-left: 9px;
+    }
+    #tool_tip {
+        display: none;
+        white-space: nowrap;
+        overflow: hidden;
+        color: white;
+        background: rgba(0,0,0,0.7);
+        border-radius: 5px;
+        padding: 9px;
+        text-align: center;
+        position: fixed;
+        bottom: 9px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    </style>
+</head>
+<body>
+<h1>share board<a class="copy-board" href="/goweb/copy?tag={{.Tag}}">copy board</a></h1>
+{{range .Items}}
+<div class="item">{{. | unescaped}}</div>
+{{end}}
+<div id="tool_tip">what the fuck!</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+<script>
+var clipboard = new Clipboard('.item', {
+    text: function(trigger) {
+        return trigger.textContent
+    }
+})
+
+var tooltip = document.getElementById('tool_tip')
+var tid
+clipboard.on('success', function(e) {
+    console.log(e.action, e.text)
+    clearTimeout(tid)
+    tooltip.innerHTML = 'copied! ' + e.text.substring(0, 10) + '...'
+    tooltip.style.display = 'block'
+    tid = setTimeout(function() {
+        tooltip.style.display = 'none'
+    }, 3000)
+})
+</script>
+</body>
+</html>
