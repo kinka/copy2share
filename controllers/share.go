@@ -3,7 +3,6 @@ package controllers
 import (
         "fmt"
         "net/http"
-        "strings"
         "html/template"
         "models"
         "strconv"
@@ -22,14 +21,16 @@ func action(w http.ResponseWriter, r *http.Request) {
 //		fmt.Printf("key: %v, val: %v\n", k, strings.Join(v, ""))
 //	}
 }
+func unescaped (x string) interface{} { return template.HTML(x) }
 
 func Share(w http.ResponseWriter, r *http.Request) {
     action(w, r)
 
-    tag := r.Form["tag"][0]
+    tag := r.Form.Get("tag")
     content := models.Fetch(tag)
     t := template.New("share board")
-    t, _ = t.Parse(`{{.}}`)
+    t = t.Funcs(template.FuncMap{"unescaped": unescaped})
+    t, _ = t.Parse(`{{. | unescaped}}`)
     t.Execute(w, content)
 }
 func Copy(w http.ResponseWriter, r *http.Request) {
@@ -44,7 +45,7 @@ func Copy(w http.ResponseWriter, r *http.Request) {
         cf := Copyform {Tag: tag}
         t.Execute(w, cf)
     } else if r.Method == "POST" {
-        n := models.Save(r.Form["tag"][0], strings.Join(r.Form["content"], ""))
+        n := models.Save(tag, r.Form.Get("content"))
         if goa == "share" {
             http.Redirect(w, r, "/goweb/share?tag=" + tag, http.StatusFound)
         } else {
