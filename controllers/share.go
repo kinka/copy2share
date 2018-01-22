@@ -6,7 +6,7 @@ import (
         "html/template"
         "models"
         "strconv"
-        "regexp"
+//        "regexp"
         )
 
 type TagItem struct {
@@ -24,9 +24,9 @@ func action(w http.ResponseWriter, r *http.Request) {
 //	}
 }
 func unescaped (x string) interface{} {
-    reg, _ := regexp.Compile(`(https?://[^\s]+)`)
-    y := reg.ReplaceAll([]byte(x), []byte("<a href='${1}'>${1}</a>"))
-    return template.HTML(y)
+//    reg, _ := regexp.Compile(`(https?://[^\s]+)`)
+//    y := reg.ReplaceAll([]byte(x), []byte("<a href='${1}' target='_blank' class='blank'>${1}</a>"))
+    return template.HTML(x)
 }
 
 func Share(w http.ResponseWriter, r *http.Request) {

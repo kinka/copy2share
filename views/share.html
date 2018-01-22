@@ -19,6 +19,9 @@
         color: #1BC1A1;
         padding-left: 9px;
     }
+    .blank {
+        color: #1BC1A1BF;
+    }
     #tool_tip {
         display: none;
         white-space: nowrap;
@@ -40,7 +43,7 @@
 {{range .Items}}
 <div class="item">{{. | unescaped}}</div>
 {{end}}
-<div id="tool_tip">what the fuck!</div>
+<div id="tool_tip">sorry</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 <script>
 var clipboard = new Clipboard('.item', {
